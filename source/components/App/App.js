@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import { connect } from 'react-redux'
 import { Switch, Route } from 'react-router-dom'
 
@@ -25,12 +25,15 @@ class App extends React.Component {
     }
 
     componentWillMount(){
+
+        //get number page
         var active = location.toString();
         var reg = /\?pages=(\d*)(.*)/;
         var a = active.match(reg)
         active =  a ? Number(a[1]): 1;
 
         this.setState({ active });
+
         // first load data
         this.props.fetchData()
     }
@@ -39,6 +42,7 @@ class App extends React.Component {
         const {data} = this.props;
         const {perPage, active} = this.state;
 
+        //slice array, and get need an array of data
         var dataGet = data.slice((active - 1) * perPage, active * perPage);
         const number = data.length;
         return (
@@ -64,6 +68,12 @@ const RoutePagination = () => (
         </Switch>
     </main>
 )
+
+Pagination.propTypes = {
+    perPage: PropTypes.number.isRequired,
+    active: PropTypes.number.isRequired,
+    handlerClick: PropTypes.func.isRequired
+}
 
 export default connect(
     state => state,

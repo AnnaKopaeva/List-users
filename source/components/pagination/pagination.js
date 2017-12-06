@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes }  from 'react'
 import { Link } from 'react-router-dom'
 
 //style
@@ -18,8 +18,9 @@ class Pagination extends React.Component {
     }
 
     render() {
-        const getPages = this.getPages();
+        const getPages = this.getPages(); //return array of number
         const { handlerClick, active, number, perPage } = this.props;
+
         const pages = Math.ceil(number / perPage);
         const before = (active - 1) < 1 ? 1 : active - 1;
         const next = (active + 1 >= pages) ? pages : active + 1;
@@ -50,7 +51,11 @@ class Pagination extends React.Component {
             </div>
         )
     }
+}
 
+Pagination.propTypes = {
+    active: PropTypes.number.isRequired,
+    handlerClick: PropTypes.func.isRequired
 }
 
 export default Pagination

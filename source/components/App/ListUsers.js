@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+
 import User from './User'
 
 const ListUsers = ({ data }) => {

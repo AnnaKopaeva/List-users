@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3a7059c44f929ee31a0e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "63578108c64219bb9c6c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -13487,7 +13487,7 @@ var _App = __webpack_require__(283);
 
 var _App2 = _interopRequireDefault(_App);
 
-var _reducers = __webpack_require__(293);
+var _reducers = __webpack_require__(294);
 
 var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -13495,9 +13495,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var loggerMiddleware = (0, _reduxLogger.createLogger)();
 
-var store = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default, // позволяет нам отправлять функции
-loggerMiddleware // аккуратно логируем действия
-));
+var store = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default, loggerMiddleware));
 
 (0, _reactDom.render)(_react2.default.createElement(
     _reactRedux.Provider,
@@ -30018,11 +30016,11 @@ var _preLoader = __webpack_require__(288);
 
 var _preLoader2 = _interopRequireDefault(_preLoader);
 
-var _pagination = __webpack_require__(290);
+var _pagination = __webpack_require__(291);
 
 var _pagination2 = _interopRequireDefault(_pagination);
 
-__webpack_require__(292);
+__webpack_require__(293);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -30059,12 +30057,15 @@ var App = function (_React$Component) {
     _createClass(App, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
+
+            //get number page
             var active = location.toString();
             var reg = /\?pages=(\d*)(.*)/;
             var a = active.match(reg);
             active = a ? Number(a[1]) : 1;
 
             this.setState({ active: active });
+
             // first load data
             this.props.fetchData();
         }
@@ -30076,6 +30077,7 @@ var App = function (_React$Component) {
                 perPage = _state.perPage,
                 active = _state.active;
 
+            //slice array, and get need an array of data
 
             var dataGet = data.slice((active - 1) * perPage, active * perPage);
             var number = data.length;
@@ -30110,6 +30112,12 @@ var RoutePagination = function RoutePagination() {
             _react2.default.createElement(_reactRouterDom.Route, { path: '/users', component: App })
         )
     );
+};
+
+_pagination2.default.propTypes = {
+    perPage: _react.PropTypes.number.isRequired,
+    active: _react.PropTypes.number.isRequired,
+    handlerClick: _react.PropTypes.func.isRequired
 };
 
 exports.default = (0, _reactRedux.connect)(function (state) {
@@ -30154,9 +30162,10 @@ function setData(json) {
 }
 
 function fetchData() {
-    // docs
     return function (dispatch) {
+        //add loader
         dispatch(requestUsers());
+        //get data
         return fetch('http://dev.frevend.com/json/users.json').then(function (response) {
             return response.json();
         }).then(function (json) {
@@ -30266,12 +30275,9 @@ var User = function User(_ref) {
         ),
         _react2.default.createElement(
             "span",
-            null,
-            user.name
-        ),
-        _react2.default.createElement(
-            "span",
-            null,
+            { className: "users-list_name" },
+            user.name,
+            " ",
             user.surname
         ),
         _react2.default.createElement(
@@ -30281,13 +30287,6 @@ var User = function User(_ref) {
         )
     );
 };
-
-// User.propTypes = {
-//     id: PropTypes.number.isRequired,
-//     name: PropTypes.string.isRequired,
-//     surname: PropTypes.string.isRequired,
-//     desc: PropTypes.string.isRequired
-// }
 
 exports.default = User;
 
@@ -30310,18 +30309,26 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _loader = __webpack_require__(289);
+__webpack_require__(289);
+
+var _loader = __webpack_require__(290);
 
 var _loader2 = _interopRequireDefault(_loader);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//style
 var PreLoader = function PreLoader() {
-    return _react2.default.createElement('img', { src: _loader2.default,
-        alt: 'loader'
-    });
+    return _react2.default.createElement(
+        'div',
+        { className: 'preloader' },
+        _react2.default.createElement('img', { src: _loader2.default,
+            alt: 'loader'
+        })
+    );
 };
 
+//images
 exports.default = PreLoader;
 
 /* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(21); if (makeExportsHot(module, __webpack_require__(3))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "preLoader.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -30329,12 +30336,18 @@ exports.default = PreLoader;
 
 /***/ }),
 /* 289 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "images/loader.gif";
 
 /***/ }),
-/* 290 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(18), RootInstanceProvider = __webpack_require__(19), ReactMount = __webpack_require__(14), React = __webpack_require__(3); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -30353,7 +30366,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(65);
 
-__webpack_require__(291);
+__webpack_require__(292);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30393,12 +30406,13 @@ var Pagination = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var getPages = this.getPages();
+            var getPages = this.getPages(); //return array of number
             var _props2 = this.props,
                 handlerClick = _props2.handlerClick,
                 active = _props2.active,
                 number = _props2.number,
                 perPage = _props2.perPage;
+
 
             var pages = Math.ceil(number / perPage);
             var before = active - 1 < 1 ? 1 : active - 1;
@@ -30457,16 +30471,15 @@ var Pagination = function (_React$Component) {
     return Pagination;
 }(_react2.default.Component);
 
+Pagination.propTypes = {
+    active: _react.PropTypes.number.isRequired,
+    handlerClick: _react.PropTypes.func.isRequired
+};
+
 exports.default = Pagination;
 
 /* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(21); if (makeExportsHot(module, __webpack_require__(3))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "pagination.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)(module)))
-
-/***/ }),
-/* 291 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 292 */
@@ -30476,6 +30489,12 @@ exports.default = Pagination;
 
 /***/ }),
 /* 293 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(18), RootInstanceProvider = __webpack_require__(19), ReactMount = __webpack_require__(14), React = __webpack_require__(3); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {

@@ -14,9 +14,10 @@ export function setData(json) {
 }
 
 export function fetchData() {
-    // docs
     return dispatch => {
+        //add loader
         dispatch(requestUsers())
+        //get data
         return fetch('http://dev.frevend.com/json/users.json')
             .then(response => response.json())
             .then(json => dispatch(setData(json)))

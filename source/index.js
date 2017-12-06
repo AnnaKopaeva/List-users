@@ -14,8 +14,8 @@ const loggerMiddleware = createLogger()
 const store = createStore(
     rootReducer,
     applyMiddleware(
-        thunkMiddleware, // позволяет нам отправлять функции
-        loggerMiddleware // аккуратно логируем действия
+        thunkMiddleware,
+        loggerMiddleware
     )
 );
 

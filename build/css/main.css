@@ -1,7 +1,14 @@
+.preloader {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
 .pagination {
-  background: #eee; }
+  background: #eee;
+  padding: 50px 0;
+  margin-top: 20px; }
 
 .pagination_list {
+  margin: auto;
   text-align: center;
   font-weight: bold; }
   .pagination_list li {
@@ -16,17 +23,26 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  flex-flow: column; }
+  min-height: 100vh;
+  flex-direction: column; }
 
 .users-list {
-  width: 960px; }
+  width: 960px;
+  margin: auto;
+  flex: 1; }
 
 .users-list_id {
-  display: block;
-  width: 50px;
-  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   border: 1px solid dodgerblue;
-  text-align: center; }
+  margin: 10px; }
+
+.users-list_name {
+  font-weight: bold;
+  padding: 10px 0; }
 
 /*# sourceMappingURL=main.css.map*/
