@@ -10,10 +10,9 @@
 Project is running at http://localhost:9000/
 
 Had appeared problem with ***'Access-Control-Allow-Origin'***
-Failed to load http://dev.frevend.com/json/users.json
 
 > need install plugin in [Chrome](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi)
 
-![loader](https://drive.google.com/drive/u/0/my-drive)
-![page](https://drive.google.com/file/d/1pogZRjP3O5Tvpa18Hi_DKDpgD1KL0I3T/view?usp=sharingg)
+![loader](https://pp.userapi.com/c841322/v841322128/4241e/yE7jeMYGtc8.jpg)
+![page](https://pp.userapi.com/c841322/v841322128/42427/jn8OxOJ52p0.jpg)
 
