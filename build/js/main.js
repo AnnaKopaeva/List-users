@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "63578108c64219bb9c6c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "913e105b84c54b1cad9d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -30049,7 +30049,8 @@ var App = function (_React$Component) {
 
         _this.state = {
             perPage: 5,
-            active: 1
+            active: 1,
+            loading: true
         };
         return _this;
     }
@@ -30070,12 +30071,18 @@ var App = function (_React$Component) {
             this.props.fetchData();
         }
     }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.setState({ loading: !this.state.loading });
+        }
+    }, {
         key: 'render',
         value: function render() {
             var data = this.props.data;
             var _state = this.state,
                 perPage = _state.perPage,
-                active = _state.active;
+                active = _state.active,
+                loading = _state.loading;
 
             //slice array, and get need an array of data
 
@@ -30087,7 +30094,7 @@ var App = function (_React$Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'main-wrapper' },
-                    this.props.loading ? _react2.default.createElement(_preLoader2.default, null) : _react2.default.createElement(_ListUsers2.default, { data: dataGet }),
+                    loading ? _react2.default.createElement(_preLoader2.default, null) : _react2.default.createElement(_ListUsers2.default, { data: dataGet }),
                     _react2.default.createElement(_pagination2.default, {
                         number: number,
                         perPage: perPage,
@@ -30138,7 +30145,6 @@ exports.default = (0, _reactRedux.connect)(function (state) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.requestUsers = requestUsers;
 exports.setData = setData;
 exports.fetchData = fetchData;
 
@@ -30147,12 +30153,6 @@ var _constants = __webpack_require__(121);
 var constants = _interopRequireWildcard(_constants);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function requestUsers() {
-    return {
-        type: constants.REQUEST_USERS
-    };
-}
 
 function setData(json) {
     return {
@@ -30163,10 +30163,8 @@ function setData(json) {
 
 function fetchData() {
     return function (dispatch) {
-        //add loader
-        dispatch(requestUsers());
         //get data
-        return fetch('http://dev.frevend.com/json/users.json').then(function (response) {
+        return fetch('https://jsonplaceholder.typicode.com/users').then(function (response) {
             return response.json();
         }).then(function (json) {
             return dispatch(setData(json));
@@ -30254,7 +30252,7 @@ exports.default = ListUsers;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _react = __webpack_require__(3);
@@ -30264,28 +30262,55 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var User = function User(_ref) {
-    var user = _ref.user;
-    return _react2.default.createElement(
-        "li",
-        { className: "users-list_item" },
-        _react2.default.createElement(
-            "span",
-            { className: "users-list_id" },
-            user.id
-        ),
-        _react2.default.createElement(
-            "span",
-            { className: "users-list_name" },
-            user.name,
-            " ",
-            user.surname
-        ),
-        _react2.default.createElement(
-            "p",
-            null,
-            user.desc
-        )
-    );
+  var user = _ref.user;
+  return _react2.default.createElement(
+    "li",
+    { className: "users-list_item" },
+    _react2.default.createElement(
+      "div",
+      { className: "id-wrapper" },
+      _react2.default.createElement(
+        "span",
+        { className: "users-list_id" },
+        user.id
+      )
+    ),
+    _react2.default.createElement(
+      "div",
+      { className: "info-wrapper" },
+      _react2.default.createElement(
+        "span",
+        { className: "users-list_name" },
+        user.name
+      ),
+      _react2.default.createElement(
+        "p",
+        null,
+        "Email:"
+      ),
+      _react2.default.createElement(
+        "span",
+        { className: "users-list_email" },
+        user.email
+      ),
+      _react2.default.createElement(
+        "p",
+        null,
+        "Company:"
+      ),
+      _react2.default.createElement(
+        "span",
+        { className: "users-list_company" },
+        user.company.name,
+        _react2.default.createElement("br", null),
+        " ",
+        user.company.catchPhrase,
+        _react2.default.createElement("br", null),
+        " ",
+        user.company.bs
+      )
+    )
+  );
 };
 
 exports.default = User;
@@ -30513,9 +30538,9 @@ exports.default = function () {
 
     switch (action.type) {
         case constants.REQUEST_USERS:
-            return _extends({}, state, { loading: true });
+            return _extends({}, state);
         case constants.SET_DATA:
-            return _extends({}, state, { data: action.data.users, loading: false });
+            return _extends({}, state, { data: action.data });
         default:
             return state;
     }
