@@ -16,7 +16,8 @@ class App extends React.Component {
         super(props);
         this.state = {
             perPage: 5,
-            active: 1
+            active: 1,
+            loading: true
         }
     }
 
@@ -38,9 +39,13 @@ class App extends React.Component {
         this.props.fetchData()
     }
 
+    componentDidMount(){
+      this.setState({loading: !this.state.loading})
+    }
+
     render(){
         const {data} = this.props;
-        const {perPage, active} = this.state;
+        const {perPage, active, loading} = this.state;
 
         //slice array, and get need an array of data
         var dataGet = data.slice((active - 1) * perPage, active * perPage);
@@ -48,13 +53,16 @@ class App extends React.Component {
         return (
             <main>
                 <div className="main-wrapper">
-                    {this.props.loading ? <PreLoader />: <ListUsers data={dataGet} />}
-                    <Pagination
-                        number={number}
-                        perPage={perPage}
-                        active={active}
-                        handlerClick={this.handlerClick}
-                    />
+                  {this.state.loading
+                    ? < PreLoader />
+                    : <ListUsers data={dataGet} />
+                  }
+                  <Pagination
+                    number={number}
+                    perPage={perPage}
+                    active={active}
+                    handlerClick={this.handlerClick}
+                  />
                 </div>
             </main>
         )
