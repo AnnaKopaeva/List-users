@@ -53,7 +53,7 @@ class App extends React.Component {
         return (
             <main>
                 <div className="main-wrapper">
-                  {this.state.loading
+                  {loading
                     ? < PreLoader />
                     : <ListUsers data={dataGet} />
                   }
